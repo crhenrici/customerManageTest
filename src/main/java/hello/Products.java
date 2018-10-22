@@ -18,6 +18,10 @@ public class Products {
 		this.manufacteur = manufacteur;
 	}
 	
+	public Products() {
+		
+	}
+	
 	public Long getId() {
 		return id;
 	}

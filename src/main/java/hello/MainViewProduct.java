@@ -58,7 +58,7 @@ class MainViewProduct {
 			grid.setItems(repo.findAll());
 		}
 		else {
-			grid.setItems(repo.findByModellWithIgnoreCase(filterText));
+			grid.setItems(repo.findByModell(filterText));
 		}
 	}
 

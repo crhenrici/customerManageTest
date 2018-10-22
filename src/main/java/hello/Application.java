@@ -12,13 +12,11 @@ import org.springframework.context.annotation.Bean;
 public class Application {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
-
     public static void main(String[] args) {
         SpringApplication.run(Application.class);
     }
-
     @Bean
-    public CommandLineRunner loadData(CustomerRepository repository, ProductRepository repo) {
+    public CommandLineRunner loadDataCustomer(CustomerRepository repository) {
         return (args) -> {
             // save a couple of customers
             repository.save(new Customer("Jack", "Bauer"));
@@ -26,11 +24,6 @@ public class Application {
             repository.save(new Customer("Kim", "Bauer"));
             repository.save(new Customer("David", "Palmer"));
             repository.save(new Customer("Michelle", "Dessler"));
-            repo.save(new Products("iPhone X", "Apple"));
-            repo.save(new Products("iPhone XS", "Apple"));
-            repo.save(new Products("Galaxy S9", "Samsung"));
-            repo.save(new Products("Galaxy A9", "Samsung"));
-            repo.save(new Products("Pixel", "Google"));
             
 
             // fetch all customers
@@ -55,29 +48,38 @@ public class Application {
                     .findByLastNameStartsWithIgnoreCase("Bauer")) {
                 log.info(bauer.toString());
             }
-            log.info("");
-            
-            log.info("Products found with findAll():");
-            log.info("------------------------------");
-            for (Products products : repo.findAll()) {
-            	log.info(products.toString());
-            }
-            log.info("");
-            
-            Products products = repo.findById(1L).get();
-            log.info("Products found with findOne(1L):");
-            log.info("--------------------------------");
-            log.info(products.toString());
-            log.info("");
-            
-            log.info("Products found with findByModellWithIgnoreCase('iPhone X'):");
-            log.info("-------------------------------------------");
-            for (Products iPhone : repo.findByModellWithIgnoreCase("iPhone X")) {
-            	log.info(iPhone.toString());
-            }
-            log.info("");
-
         };
     }
+        @Bean
+        public CommandLineRunner loadDataProducts(ProductRepository repo) {
+            return (args) -> {
+                // save a couple of products
+                repo.save(new Products("iPhone X", "Apple"));
+                repo.save(new Products("iPhone XS", "Apple"));
+                repo.save(new Products("Galaxy S9", "Samsung"));
+                repo.save(new Products("Galaxy A9", "Samsung"));
+                repo.save(new Products("Pixel", "Google"));
+                
+                log.info("Products found with findAll():");
+                log.info("------------------------------");
+                for (Products products : repo.findAll()) {
+                	log.info(products.toString());
+                }
+                log.info("");
+                
+                /*Products products = repo.findById(1L).get();
+                log.info("Products found with findOne(1L):");
+                log.info("--------------------------------");
+                log.info(products.toString());
+                log.info("");*/
+                
+                log.info("Products found with findByModellWithIgnoreCase('iPhone X'):");
+                log.info("-------------------------------------------");
+                for (Products iPhone : repo.findByModell("iPhone X")) {
+                	log.info(iPhone.toString());
+                }
+                log.info("");
 
+            };
+    }
 }

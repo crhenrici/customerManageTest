@@ -11,6 +11,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.Tabs;
+
 
 @Route
   class MainView  extends VerticalLayout {
@@ -21,12 +24,18 @@ import com.vaadin.flow.router.Route;
 	final TextField filter;
 	private final Button addNewBtn;
 	
+	
 	public MainView(CustomerRepository repo, CustomerEditor editor) {
 		this.repo = repo;
 		this.editor = editor;
 		this.grid = new Grid<>(Customer.class);
 		this.filter = new TextField();
 		this.addNewBtn = new Button("New Customer", VaadinIcon.PLUS.create());
+		Tabs tabs =  new Tabs();
+		Tab tab1 = new Tab("Customers");
+		Tab tab2 = new Tab("Products");
+		tabs.add(tab1, tab2);
+		
 		
 		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
 		add(actions, grid, editor);

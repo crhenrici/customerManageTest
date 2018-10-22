@@ -1,4 +1,4 @@
-package hello;
+package customer.manage.db;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

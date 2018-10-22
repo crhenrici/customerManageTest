@@ -1,4 +1,4 @@
-package hello;
+package customer.manage.ui.views.product;
 
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyNotifier;
@@ -8,35 +8,41 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
+
+import customer.manage.db.ProductRepository;
+import customer.manage.db.Products;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 @SpringComponent
 @UIScope
-public class CustomerEditor extends VerticalLayout implements KeyNotifier{
+@Route(value = "products")
+public class ProductsEditor extends VerticalLayout implements KeyNotifier {
 
-	private final CustomerRepository repository;
+	private final ProductRepository repo;
 	
-	private Customer customer;
+	private Products product;
 	
-	TextField firstName = new TextField("First name");
-	TextField lastName = new TextField("Last name");
+	TextField modell = new TextField("Modell");
+	TextField manufacteur = new TextField("Manufacteur");
 	
 	Button save = new Button("Save", VaadinIcon.CHECK.create());
 	Button cancel = new Button("Cancel");
 	Button delete = new Button("Delete", VaadinIcon.TRASH.create());
 	HorizontalLayout actions = new HorizontalLayout(save, cancel, delete);
 	
-	Binder<Customer> binder = new Binder<>(Customer.class);
+	Binder<Products> binder = new Binder<>(Products.class);
 	private ChangeHandler changeHandler;
 	
 	@Autowired
-	public CustomerEditor(CustomerRepository repository) {
-		this.repository = repository;
+	public ProductsEditor(ProductRepository repo) {
+		this.repo = repo;
 		
-		add(firstName, lastName, actions);
+		add(modell, manufacteur);
 		
 		binder.bindInstanceFields(this);
 		
@@ -49,18 +55,17 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier{
 		
 		save.addClickListener(e -> save());
 		delete.addClickListener(e -> delete());
-		cancel.addClickListener(e -> editCustomer(customer));
-		setVisible(false);
-		
+		cancel.addClickListener(e -> editProduct(product));
+		setVisible(true);
 	}
 	
 	void delete() {
-		repository.delete(customer);
+		repo.delete(product);
 		changeHandler.onChange();
 	}
 	
 	void save() {
-		repository.save(customer);
+		repo.save(product);
 		changeHandler.onChange();
 	}
 	
@@ -68,28 +73,26 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier{
 		void onChange();
 	}
 	
-	public final void editCustomer(Customer c) {
-		if (c == null) {
+	public final void editProduct(Products p) {
+		if(p == null) {
 			setVisible(false);
 			return;
 		}
-		final boolean persisted = c.getId() != null;
-		if (persisted) {
-			customer = repository.findById(c.getId()).get();
+		final boolean persisted = p.getId() != null;
+		if(persisted) {
+			product = repo.findById(p.getId()).get();
 		}
 		else {
-			customer = c;
+			product = p;
 		}
 		cancel.setVisible(persisted);
-		
-		binder.setBean(customer);
-		
+		binder.setBean(product);
 		setVisible(true);
-		
-		firstName.focus();
+		modell.focus();
 	}
 	
 	public void setChangedHandler(ChangeHandler h) {
 		changeHandler = h;
 	}
+	
 }

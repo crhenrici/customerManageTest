@@ -1,4 +1,4 @@
-package hello;
+package customer.manage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,6 +7,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import customer.manage.db.Customer;
+import customer.manage.db.CustomerRepository;
+import customer.manage.db.ProductRepository;
+import customer.manage.db.Products;
 
 @SpringBootApplication
 public class Application {

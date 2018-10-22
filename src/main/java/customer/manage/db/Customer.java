@@ -1,4 +1,4 @@
-package hello;
+package customer.manage.db;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

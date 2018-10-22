@@ -1,22 +1,27 @@
-package hello;
+package customer.manage.ui.views.customer;
 
 import org.springframework.util.StringUtils;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.component.tabs.Tab;
-import com.vaadin.flow.component.tabs.Tabs;
+import com.vaadin.flow.spring.annotation.SpringComponent;
+import com.vaadin.flow.spring.annotation.UIScope;
 
+import customer.manage.db.Customer;
+import customer.manage.db.CustomerRepository;
 
-@Route
-  class MainView  extends VerticalLayout {
+@SpringComponent
+@UIScope
+@Route(value = "customers")
+public  class CustomersList  extends VerticalLayout {
 	
 	private final CustomerRepository repo;
 	private final CustomerEditor editor;
@@ -25,7 +30,7 @@ import com.vaadin.flow.component.tabs.Tabs;
 	private final Button addNewBtn;
 	
 	
-	public MainView(CustomerRepository repo, CustomerEditor editor) {
+	public CustomersList(CustomerRepository repo, CustomerEditor editor) {
 		this.repo = repo;
 		this.editor = editor;
 		this.grid = new Grid<>(Customer.class);

@@ -1,9 +1,10 @@
-package hello;
+package customer.management.ui;
 
 import org.springframework.util.StringUtils;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -11,33 +12,43 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.spring.annotation.SpringComponent;
+import com.vaadin.flow.spring.annotation.UIScope;
+
+import customer.management.db.CustomerRepository;
+import customer.management.model.Customer;
+
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 
-
-@Route
-  class MainView  extends VerticalLayout {
+@SpringComponent
+@UIScope
+@Route(value = "customers")
+class MainViewCustomer  extends VerticalLayout {
 	
 	private final CustomerRepository repo;
 	private final CustomerEditor editor;
 	final Grid<Customer> grid;
 	final TextField filter;
 	private final Button addNewBtn;
-	
-	
-	public MainView(CustomerRepository repo, CustomerEditor editor) {
+
+	public MainViewCustomer(CustomerRepository repo, CustomerEditor editor) {
 		this.repo = repo;
 		this.editor = editor;
 		this.grid = new Grid<>(Customer.class);
 		this.filter = new TextField();
 		this.addNewBtn = new Button("New Customer", VaadinIcon.PLUS.create());
-		Tabs tabs =  new Tabs();
-		Tab tab1 = new Tab("Customers");
-		Tab tab2 = new Tab("Products");
-		tabs.add(tab1, tab2);
 		
+		RouterLink products = new RouterLink("Products", MainViewProduct.class);
+		products.add(new Icon(VaadinIcon.ARCHIVES));
+		products.addClassName("main-layout__nav-item");
 		
-		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
+		RouterLink orders = new RouterLink("Orders", MainViewOrders.class);
+		orders.add(new Icon(VaadinIcon.BOOK));
+		orders.addClassName("main-layout__nav-item");
+		
+		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn, products, orders);
 		add(actions, grid, editor);
 		
 		grid.setHeight("300px");
@@ -58,8 +69,7 @@ import com.vaadin.flow.component.tabs.Tabs;
 		editor.setChangedHandler(() -> {
 			editor.setVisible(false);
 			listCustomers(filter.getValue());
-		});
-		
+		});		
 		listCustomers(null);
 	}
 	

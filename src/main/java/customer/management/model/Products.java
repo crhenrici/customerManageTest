@@ -1,4 +1,4 @@
-package hello;
+package customer.management.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,7 +44,8 @@ public class Products {
 	
 	@Override
 	public String toString() {
-		return String.format("Products[id=%d, model='%s', manufacteur='%s']", id, modell, manufacteur);
+		return String.format("Products[id=%d, model='%s', manufacteur='%s']", 
+				id, modell, manufacteur);
 	}
 
 }

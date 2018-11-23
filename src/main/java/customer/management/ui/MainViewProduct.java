@@ -1,9 +1,10 @@
-package hello;
+package customer.management.ui;
 
 import org.springframework.util.StringUtils;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -11,9 +12,17 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.spring.annotation.SpringComponent;
+import com.vaadin.flow.spring.annotation.UIScope;
 
-@Route
-class MainViewProduct {
+import customer.management.db.ProductRepository;
+import customer.management.model.Products;
+
+@SpringComponent
+@UIScope
+@Route(value = "products")
+class MainViewProduct extends VerticalLayout {
 	
 	private final ProductRepository repo;
 	private final ProductsEditor editor;
@@ -28,8 +37,16 @@ class MainViewProduct {
 		this.filter = new TextField();
 		this.addNewBtn = new Button("New Product", VaadinIcon.PLUS.create());
 		
-		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
-		actions.add(grid, editor);
+		RouterLink customers = new RouterLink("Customer", MainViewCustomer.class);
+		customers.add(new Icon(VaadinIcon.LIST));
+		customers.addClassName("main-layout__nav-item");
+		
+		RouterLink orders = new RouterLink("Orders", MainViewOrders.class);
+		orders.add(new Icon(VaadinIcon.BOOK));
+		orders.addClassName("main-layout__nav-item");
+		
+		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn, customers, orders);
+		add(actions, grid, editor);
 		
 		grid.setHeight("300px");
 		grid.setColumns("id", "modell", "manufacteur");

@@ -1,4 +1,4 @@
-package hello;
+package customer.management.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,13 +15,18 @@ public class Customer {
 
     private String lastName;
 
+    private String address;
+    
+    private int age;
+    
     protected Customer() {
-    	
+    
     }
 
     public Customer(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+        
     }
 
     public Long getId() {

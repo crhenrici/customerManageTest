@@ -1,6 +1,8 @@
-package hello;
+package customer.management.db;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import customer.management.model.Customer;
 
 import java.util.List;
 

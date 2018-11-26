@@ -27,7 +27,7 @@ public class OrderRepositoryTest {
 		assertTrue(result.size() == 1);
 		Orders order = result.get(0);
 		assertNotNull(order);
-		assertEquals("Bauer", order.getCustomerName());
+		assertEquals("Martinez", order.getCustomerName());
 		assertEquals("iPhone X", order.getProductDescription());
 	}
 	

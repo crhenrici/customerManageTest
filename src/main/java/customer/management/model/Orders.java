@@ -4,6 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * @author cristian
+ *orders class
+ */
 @Entity
 public class Orders {
 
@@ -18,6 +22,12 @@ public class Orders {
 
 	}
 
+	/**
+	 * constructor
+	 * @param productDescription
+	 * @param customerName
+	 * @param price
+	 */
 	public Orders(String productDescription, String customerName, Double price) {
 		this.productDescription = productDescription;
 		this.customerName = customerName;
@@ -56,6 +66,9 @@ public class Orders {
 		this.price = price;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "Orders [id=" + id + ", productDescription=" + productDescription + ", customerName=" + customerName

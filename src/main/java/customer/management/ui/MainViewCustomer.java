@@ -18,6 +18,10 @@ import com.vaadin.flow.spring.annotation.UIScope;
 import customer.management.db.CustomerRepository;
 import customer.management.model.Customer;
 
+/**
+ * @author cristian
+ *MainViewCustomer class extended by VerticalLayout
+ */
 @SpringComponent
 @UIScope
 @Route(value = "customers")
@@ -27,26 +31,35 @@ class MainViewCustomer extends VerticalLayout {
 	private final CustomerEditor editor;
 	final Grid<Customer> grid;
 	final TextField filter;
-	private final Button addNewBtn;
+	private final Button addNewCustomerBtn;
 
+	/**
+	 * constructor
+	 * @param repo
+	 * @param editor
+	 */
 	public MainViewCustomer(CustomerRepository repo, CustomerEditor editor) {
 		this.repo = repo;
 		this.editor = editor;
 		this.grid = new Grid<>(Customer.class);
 		this.filter = new TextField();
-		this.addNewBtn = new Button("New Customer", VaadinIcon.PLUS.create());
+		this.addNewCustomerBtn = new Button("New Customer", VaadinIcon.PLUS.create());
 
+		//RouterLink for MainViewProduct
 		RouterLink products = new RouterLink("Products", MainViewProduct.class);
 		products.add(new Icon(VaadinIcon.ARCHIVES));
 		products.addClassName("main-layout__nav-item");
 
+		//RouterLink for MainViewProduct
 		RouterLink orders = new RouterLink("Orders", MainViewOrders.class);
 		orders.add(new Icon(VaadinIcon.BOOK));
 		orders.addClassName("main-layout__nav-item");
 
-		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn, products, orders);
+		//add elements to HorizontalLayout
+		HorizontalLayout actions = new HorizontalLayout(filter, addNewCustomerBtn, products, orders);
 		add(actions, grid, editor);
 
+		//create grid columns
 		grid.setHeight("300px");
 		grid.setColumns("id", "firstName", "lastName", "isStudent");
 		grid.getColumnByKey("id").setWidth("50px").setFlexGrow(0);
@@ -60,8 +73,10 @@ class MainViewCustomer extends VerticalLayout {
 			editor.editCustomer(e.getValue());
 		});
 
-		addNewBtn.addClickListener(e -> editor.editCustomer(new Customer("", "", false)));
+		//add a new Customer
+		addNewCustomerBtn.addClickListener(e -> editor.editCustomer(new Customer("", "", false)));
 
+		//changes editor if filtered
 		editor.setChangedHandler(() -> {
 			editor.setVisible(false);
 			listCustomers(filter.getValue());
@@ -69,6 +84,7 @@ class MainViewCustomer extends VerticalLayout {
 		listCustomers(null);
 	}
 
+	//filters list off input
 	public void listCustomers(String filterText) {
 		if (StringUtils.isEmpty(filterText)) {
 			grid.setItems(repo.findAll());

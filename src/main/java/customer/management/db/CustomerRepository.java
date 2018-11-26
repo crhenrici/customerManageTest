@@ -7,17 +7,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import customer.management.model.Customer;
 
 /**
- * 
- *
+ * CustomerRepository interface extended by JpaRepository of Spring Data
  * @author cristian
  *
  */
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 	/**
-	 * S
+	 * Find all Customers with lastName
 	 * @param lastName
-	 * @return 
+	 * @return list of customers found by lastName
 	 */
 	List<Customer> findByLastName(String lastName);
 }

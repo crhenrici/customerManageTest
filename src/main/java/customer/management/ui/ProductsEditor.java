@@ -19,6 +19,10 @@ import com.vaadin.flow.spring.annotation.UIScope;
 import customer.management.db.ProductRepository;
 import customer.management.model.Products;
 
+/**
+ * @author cristian
+ *ProductsEditor class extended by VerticalLayout and implements KeyNotifier
+ */
 @SpringComponent
 @UIScope
 public class ProductsEditor extends VerticalLayout implements KeyNotifier {
@@ -43,12 +47,17 @@ public class ProductsEditor extends VerticalLayout implements KeyNotifier {
 
 	private ChangeHandler changeHandler;
 
+	/**
+	 * constructor
+	 * @param repo
+	 */
 	@Autowired
 	public ProductsEditor(ProductRepository repo) {
 		this.repo = repo;
 
 		add(actions, modell, manufacteur, price);
 
+		//convert value to double and bind the values to their respective fields
 		binder.forField(price)
 		.withConverter(
 		        new StringToDoubleConverter("Must enter a number"))
@@ -63,17 +72,25 @@ public class ProductsEditor extends VerticalLayout implements KeyNotifier {
 
 		addKeyPressListener(Key.ENTER, e -> saveProduct());
 
+		//add listener to buttons
 		saveButton.addClickListener(e -> saveProduct());
 		deleteButton.addClickListener(e -> deleteProduct());
 		cancelButton.addClickListener(e -> ProductsEditor.this.setVisible(false));
 		setVisible(false);
 	}
 
+	/**
+	 * deletes current product
+	 */
 	public void deleteProduct() {
 		repo.delete(product);
 		changeHandler.onChange();
 	}
 
+	/**
+	 * edits current product
+	 * @param p
+	 */
 	public final void editProduct(Products p) {
 		if (p == null) {
 			setVisible(false);
@@ -91,6 +108,9 @@ public class ProductsEditor extends VerticalLayout implements KeyNotifier {
 		modell.focus();
 	}
 
+	/**
+	 * saves current product
+	 */
 	public void saveProduct() {
 		repo.save(product);
 		changeHandler.onChange();

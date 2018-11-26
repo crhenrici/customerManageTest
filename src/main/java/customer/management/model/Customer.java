@@ -4,6 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * @author cristian
+ *Customer class
+ */
 @Entity
 public class Customer {
 
@@ -18,6 +22,12 @@ public class Customer {
 
 	}
 
+	/**
+	 * constructor
+	 * @param firstName
+	 * @param lastName
+	 * @param isStudent
+	 */
 	public Customer(String firstName, String lastName, Boolean isStudent) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -57,6 +67,9 @@ public class Customer {
 		this.isStudent = isStudent;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", isStudent=" + isStudent

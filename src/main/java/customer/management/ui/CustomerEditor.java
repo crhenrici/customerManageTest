@@ -17,6 +17,10 @@ import com.vaadin.flow.spring.annotation.UIScope;
 import customer.management.db.CustomerRepository;
 import customer.management.model.Customer;
 
+/**
+ * @author cristian
+ *CustomerEditor class extended by VerticalLayout and implements KeyNotifier
+ */
 @SpringComponent
 @UIScope
 public class CustomerEditor extends VerticalLayout implements KeyNotifier {
@@ -41,12 +45,17 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 
 	private ChangeHandler changeHandler;
 
+	/**
+	 * @param repository
+	 * constructor
+	 */
 	@Autowired
 	public CustomerEditor(CustomerRepository repository) {
 		this.repository = repository;
 
 		add(firstName, lastName, isStudent, actions);
 
+		//bind values to their respective fields
 		binder.bindInstanceFields(this);
 
 		setSpacing(true);
@@ -56,6 +65,7 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 
 		addKeyPressListener(Key.ENTER, e -> saveCustomer());
 
+		//add listeners to button
 		saveButton.addClickListener(e -> saveCustomer());
 		deleteButton.addClickListener(e -> deleteCustomer());
 		cancelButton.addClickListener(e -> CustomerEditor.this.setVisible(false));
@@ -63,11 +73,18 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 
 	}
 
+	/**
+	 * deletes current customer
+	 */
 	public void deleteCustomer() {
 		repository.delete(customer);
 		changeHandler.onChange();
 	}
 
+	/**
+	 * @param c
+	 * edits current customer
+	 */
 	public final void editCustomer(Customer c) {
 		if (c == null) {
 			setVisible(false);
@@ -88,6 +105,9 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 		firstName.focus();
 	}
 
+	/**
+	 * saves current customer
+	 */
 	public void saveCustomer() {
 		repository.save(customer);
 		changeHandler.onChange();

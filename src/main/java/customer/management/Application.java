@@ -14,6 +14,12 @@ import customer.management.model.Customer;
 import customer.management.model.Orders;
 import customer.management.model.Products;
 
+/**
+ * Main Spring Boot Application
+ * 
+ * @author cristian
+ *
+ */
 @SpringBootApplication
 public class Application {
 
@@ -23,6 +29,11 @@ public class Application {
 		SpringApplication.run(Application.class);
 	}
 
+	/**
+	 * Preloads Customer Data into In Mememory Database
+	 * @param repo 
+	 * @return
+	 */
 	@Bean
 	public CommandLineRunner loadDataCustomer(CustomerRepository repo) {
 		return (args) -> {
@@ -57,6 +68,10 @@ public class Application {
 		};
 	}
 
+	/**Preloads Orders Data into In Mememory Database
+	 * @param repo
+	 * @return
+	 */
 	@Bean
 	public CommandLineRunner loadDataOrder(OrderRepository repo) {
 		return (args) -> {
@@ -70,15 +85,19 @@ public class Application {
 			}
 			log.info("");
 
-			log.info("Products found with findByProductDescription( 'Bauer'");
+			log.info("Products found with findByProductDescription( 'Martinez'");
 			log.info("----------------------------------------");
-			for (Orders bauer : repo.findByProductDescription("Bauer")) {
-				log.info(bauer.toString());
+			for (Orders martinez : repo.findByProductDescription("Martinez")) {
+				log.info(martinez.toString());
 			}
 			log.info("");
 		};
 	}
 
+	/**Preloads Products Data into In Mememory Database
+	 * @param repo
+	 * @return
+	 */
 	@Bean
 	public CommandLineRunner loadDataProducts(ProductRepository repo) {
 		return args -> {

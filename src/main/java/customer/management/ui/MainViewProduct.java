@@ -18,6 +18,10 @@ import com.vaadin.flow.spring.annotation.UIScope;
 import customer.management.db.ProductRepository;
 import customer.management.model.Products;
 
+/**
+ * @author cristian
+ *MainViewProduct class extended by VerticalLayout
+ */
 @SpringComponent
 @UIScope
 @Route(value = "products")
@@ -29,6 +33,11 @@ class MainViewProduct extends VerticalLayout {
 	final TextField filter;
 	private final Button addNewBtn;
 
+	/**
+	 * constructor
+	 * @param repo
+	 * @param editor
+	 */
 	public MainViewProduct(ProductRepository repo, ProductsEditor editor) {
 		this.repo = repo;
 		this.editor = editor;
@@ -36,17 +45,21 @@ class MainViewProduct extends VerticalLayout {
 		this.filter = new TextField();
 		this.addNewBtn = new Button("New Product", VaadinIcon.PLUS.create());
 
+		//RouterLink for MainViewCustomer
 		RouterLink customers = new RouterLink("Customer", MainViewCustomer.class);
 		customers.add(new Icon(VaadinIcon.LIST));
 		customers.addClassName("main-layout__nav-item");
 
+		//RouterLink for MainViewOrder
 		RouterLink orders = new RouterLink("Orders", MainViewOrders.class);
 		orders.add(new Icon(VaadinIcon.BOOK));
 		orders.addClassName("main-layout__nav-item");
 
+		//add elements to HorizontalLayout
 		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn, customers, orders);
 		add(actions, grid, editor);
 
+		//create grid columns
 		grid.setHeight("300px");
 		grid.setColumns("id", "modell", "manufacteur", "price");
 		grid.getColumnByKey("id").setWidth("50px").setFlexGrow(0);
@@ -62,6 +75,7 @@ class MainViewProduct extends VerticalLayout {
 
 		addNewBtn.addClickListener(e -> editor.editProduct(new Products("", "", 0.0)));
 
+		//changes editor if filtered
 		editor.setChangedHandler(() -> {
 			editor.setVisible(false);
 			listProducts(filter.getValue());
@@ -69,6 +83,10 @@ class MainViewProduct extends VerticalLayout {
 		listProducts(null);
 	}
 
+	/**
+	 * filters list off input
+	 * @param filterText
+	 */
 	void listProducts(String filterText) {
 		if (StringUtils.isEmpty(filterText)) {
 			grid.setItems(repo.findAll());

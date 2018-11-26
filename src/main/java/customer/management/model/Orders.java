@@ -6,46 +6,64 @@ import javax.persistence.Id;
 
 @Entity
 public class Orders {
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;
 	private String productDescription;
 	private String customerName;
-	
-	public Orders(String productDescription, String customerName) {
+	private Double price;
+
+	public Orders() {
+
+	}
+
+	public Orders(String productDescription, String customerName, Double price) {
 		this.productDescription = productDescription;
 		this.customerName = customerName;
+		this.price = price;
 	}
-	
-	public Orders() {
-		
-	}
-	
+
 	public Long getId() {
 		return id;
 	}
-	
-	public void setProductDescription(String productDescription) {
-		this.productDescription = productDescription;
+
+	public void setId(Long id) {
+		this.id = id;
 	}
-	
+
 	public String getProductDescription() {
 		return productDescription;
 	}
-	
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
+
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
 	}
-	
+
 	public String getCustomerName() {
 		return customerName;
 	}
-	
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
 	@Override
 	public String toString() {
-		return String.format("Orders[id=%d, productDescription='%s', customerName='%s']",
-				id, productDescription, customerName);
+		return "Orders [id=" + id + ", productDescription=" + productDescription + ", customerName=" + customerName
+				+ ", price=" + price + "]";
 	}
+	
+	
+
+	
 
 }

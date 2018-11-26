@@ -1,1 +1,6 @@
-# customerManagement
+# Purpose
+
+# Technologie Choice
+
+
+#Open items

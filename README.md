@@ -1,24 +1,21 @@
 # Purpose
 
-Es handelt sich um ein CustomerManagement Programm bei der man Kunden, Produkte und Bestellungen verwalten kann.
+It is a customer management program where you can manage customers, products and orders.
 
 
 # Technology Choice
 
-Nach der Suche auf einem Java basierte Web UI-Framework bin ich auf Vaadin hinzugestossen und so auch auf Springboot, bei der es verschiedene kurze Tutorials gab zur Einarbeitung. Bei der Implementierung bin ich von diesem Programm ausgegangen und habe es im Selbststudium dann auch entsprechend ausgebaut mit Navigation, Kalkulation etc.
+After searching for a Java based Web UI framework I came across Vaadin and so also Springboot, where there were several short tutorials for familiarization. For the implementation I started with this program and extended it with navigation, calculation and so on.
 
-https://vaadin.com/
-https://spring.io/guides/gs/crud-with-vaadin/
+https://vaadin.com/ https://spring.io/guides/gs/crud-with-vaadin/
 
-#Open items
-MVP -> man koennte das UI noch besser organiseren mit einem Programmierpattern.
-https://de.wikipedia.org/wiki/Model-View-Presenter
+# Open items
+MVP -> you could organize the UI even better with a programming pattern. https://de.wikipedia.org/wiki/Model-View-Presenter
 
-Validierung -> die Daten wurden noch nicht ueberall validiert
+Validation -> the data was not yet validated everywhere
 
-Navigation entlang Foreign Key Beziehungen im Model
+Navigation along foreign key relationships in the model
 
-Arbeiten mit einer echten Datenbank
+Working with a real database
 
-Testen -> Daten erst im Test hineingeladen
-
+Testing -> data only loaded in test
